@@ -6,19 +6,20 @@ window.addEventListener("load", function(){
 	canvas.style.marginLeft = "28%";
 	canvas.style.marginTop = "8.5%";
 	var context = canvas.getContext('2d');
-	
+	var score = document.getElementById("score");
 	
 	document.addEventListener("keydown",changerdirection);
 	
+	var delay = 100 ; 
+	
+	
+	var snake = [{x : 55, y : 24},{x : 56, y : 24}];
+	var snakelen = 1;
+	var sc = 0;
+
 	
 	
 	
-	var snake = [{x : 5, y : 2}];
-	
-	//position de la tête
-	
-	
-	console.log(snake[0].x);
 	
 	
 	var world = new Array(80);
@@ -26,39 +27,37 @@ window.addEventListener("load", function(){
 		world[i] = new Array(40);
 		
 	}
-	
-	// intialiser le monde
-function insert(x,y){	
-	for(var ligne = 0 ; ligne<80 ; ligne++){
-		for(var colonne = 0 ; colonne<40; colonne++){
-			if(ligne ==x && colonne ==y){
-				snake[0].x = ligne*20;
-				snake[0].y = colonne*20;
-				drawSq(ligne*20,colonne*20);
-				}
-		
-		}
-	
-	
-	}
-	
-}
+// fill stles 
+var bck = "lightGreen";
+var snk = "black";
+var fruit = "red";
 
+context.fillStyle = bck;
+context.fillRect(0,0 ,80*20,40*20);
 
-
+//draw walls from json 
 
 
 	//dessiner une case
 function drawSq(x,y){
-	
+	context.fillStyle = snk;
 	context.fillRect(x,y,20,20);	
-	
-	
-	
 	
 }
 
-insert(snake[0].x,snake[0].y);
+function drawFr(x,y){
+	context.fillStyle = fruit;
+	context.fillRect(x,y,20,20);
+	
+	
+}
+//initialiser le monde 
+for(i =0 ; i<snake.length;i++){
+				
+	
+		drawSq(snake[i].x*20,snake[i].y*20);
+
+		}
 
 
 
@@ -80,19 +79,104 @@ function changerdirection(event){
 		direction = "Right" ; 
 	}
 	
-	
+	console.log(direction);
 	
 
 	
 	}
+	
+var fruitposx = Math.floor((Math.random() * 80) + 1);
+var fruitposy = Math.floor((Math.random() * 40) + 1);
+drawFr(fruitposx*20,fruitposy*20);
 
 
-function directionsnake(){
-	console.log(direction);
+function movesnake(){
+var oldx = snake[0].x;
+var oldy = snake[0].y;
+
+	if(direction=="Right"){
+
+		
+		context.clearRect(oldx*20,oldy*20,20,20);
+		context.fillStyle = bck;
+		context.fillRect(oldx*20,oldy*20,20,20);
+		
+		snake.push({x:snake[snakelen].x+1,y:snake[snakelen].y});
+		snake.shift();
+		
+
+		
+
 	
 }
+if(direction=="Down"){
+		
+		context.clearRect(oldx*20,oldy*20,20,20);
+		context.fillStyle = bck;
+		context.fillRect(oldx*20,oldy*20,20,20);
+		snake.push({x:snake[snakelen].x,y:snake[snakelen].y+1});
+		snake.shift();
+		
+		
+		
+			
+	}
 	
-//setInterval (directionsnake,200);	
+	
+
+if(direction=="Left"){
+		
+		context.clearRect(oldx*20,oldy*20,20,20);
+		context.fillStyle = bck;
+		context.fillRect(oldx*20,oldy*20,20,20);
+		snake.push({x:snake[snakelen].x-1,y:snake[snakelen].y});
+		snake.shift();
+		
+
+	
+}
+if(direction=="Up"){
+		
+		context.clearRect(oldx*20,oldy*20,20,20);
+		context.fillStyle = bck;
+		context.fillRect(oldx*20,oldy*20,20,20);
+		snake.push({x:snake[snakelen].x,y:snake[snakelen].y-1});
+		snake.shift();
+		
+	
+}
+
+
+for(i =0 ; i<snake.length;i++){
+				
+		
+		drawSq(snake[i].x*20,snake[i].y*20);
+		console.log(snake.length);
+		}
+
+
+
+
+
+		
+		if(oldx==fruitposx && oldy==fruitposy){
+		delay-=10;
+		console.log(delay);
+		fruitposx = Math.floor((Math.random() * 80) + 1);
+		fruitposy = Math.floor((Math.random() * 40) + 1);
+		drawFr(fruitposx*20,fruitposy*20);
+		sc +=1;
+		score.innerHTML=sc;
+		
+		snake.push({x: snake[snakelen].x-1,y: snake[snakelen].y});
+		snakelen = snakelen +1;
+}
+
+}
+
+
+	
+setInterval (movesnake,delay);	
 
 	
 	
