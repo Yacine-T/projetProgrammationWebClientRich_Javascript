@@ -1,10 +1,33 @@
 
+header {
+
+	width: 500px;
+	margin-left:1000px;
+	margin-top:300px;
+	font-size:25px;
+	background-color: lightBlue;
+	color : blue;
+	text-align: center;
 
 
+}
 
-div{
+#scoreboard {
 	margin-left:1000px;
 	margin-top:10px;
-	
+
 	font-size:50px;
+}
+
+
+#instructions {
+
+width: 500px;
+margin-left:1000px;
+margin-top:300px;
+font-size:25px;
+background-color: lightBlue;
+color : blue;
+text-align: center;
+
 }

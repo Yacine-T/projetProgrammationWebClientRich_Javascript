@@ -3,23 +3,39 @@
 <head>
 	<title>TP6</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="style.css">. 
+	<link rel="stylesheet" type="text/css" href="style.css">.
 
 </head>
 <body id="body">
 	<canvas id="canvas"> </canvas>
-	
-	
-	<div>
+	<header id= "lostmessage"> OUPS ! Vous avez perdu. Réeesayez </header>
+	<div id = "instructions">
+		<p> Bonjour ! Bienvenue sur SNAKE</p>
+
+		<p> Utlisez les flèches pour vous déplacez </p>
+		<p> Mangez les fruits pour gradir </p>
+		<p> Evitez les murs et restez à l'interieur du canevas ! </p>
+		<input type = "button" value = "Easy" class = "LevelSelect" id = "easy"> </input>
+		<input type = "button" value = "Medium" class = "LevelSelect" id = "medium"> </input>
+		<input type = "button" value = "Hard" class = "LevelSelect" id = "hard"> </input>
+
+
+
+	</div >
+
+
+
+
+	<div id = "scoreboard">
 		Score : <span id = "score"></span>
-	
+
 	</div>
 	<script src="script.js"></script>
 
 
 
-	
-	
-	
+
+
+
 </body>
 </html>
