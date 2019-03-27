@@ -15,16 +15,16 @@ window.addEventListener("load", function(){
 	var message = document.getElementById("lostmessage");
 	message.style.display = "none";
 	var delay=100;
-// Audio
 
-var audio = new Audio('.mp3');
 
-var oldsnake = null ;
-var numberofclick = 0;
+	var oldsnake = null ;
+	var numberofclick = 0;
+	var levelselected ; 
 
 	levelSelector[0].addEventListener("click",displaylev1);
 	levelSelector[1].addEventListener("click",displaylev2);
-	//levelSelector[2].addEventListener("click",displaylev3);
+	levelSelector[2].addEventListener("click",displaylev3);
+	
 	function displaylev1(){
 		//draw walls
 		snakelen =1;
@@ -43,7 +43,7 @@ var numberofclick = 0;
 		}
 		wall = wall1 ;
 
-		numberofclick+=1;
+		
 		bck = "lightGreen";
 		accueil.style.display = "none";
 		message.style.display = "none";
@@ -52,15 +52,16 @@ var numberofclick = 0;
 		freeze = false;
 		direction = "null";
 		score.innerHTML = 0;
-		if(numberofclick>1){
+		if(numberofclick>0){
 		for(var i =0; i<snake.length;i++){
 		 context.fillStyle = "lightGreen"
 		 context.clearRect(oldsnake[i].x*20,oldsnake[i].y*20,20,20);
 		 context.fillRect(oldsnake[i].x*20,oldsnake[i].y*20,20,20);
 
 }
-context.fillStyle = "brown";
-context.fillRect(oldsnake[snakelen].x*20,oldsnake[snakelen].y*20,20,20);
+	numberofclick+=1;
+	context.fillStyle = "brown";
+	context.fillRect(oldsnake[snakelen].x*20,oldsnake[snakelen].y*20,20,20);
 
 	 }
 
@@ -83,7 +84,7 @@ context.fillRect(oldsnake[snakelen].x*20,oldsnake[snakelen].y*20,20,20);
 
 		}
 
-		if(numberofclick>1){
+		if(numberofclick>=0){
 		for(var i =0; i<snake.length;i++){
 		 context.fillStyle = "lightGreen"
 		 context.clearRect(oldsnake[i].x*20,oldsnake[i].y*20,20,20);
@@ -94,8 +95,44 @@ context.fillRect(oldsnake[snakelen].x*20,oldsnake[snakelen].y*20,20,20);
 		message.style.display = "none";
 		accueil.style.display = "none";
 		canvas.style.display="block";
+		numberofclick+=1
+		
 		wall = wall2;
 
+	}
+	
+	
+	function displaylev3(){
+	levelselected =3 ;
+	freeze = false;
+	snakelen =1;
+	delay=10;
+	 
+	 
+	 for (var i = 0 ; i<wall.length;i++){
+			context.fillStyle = "lightGreen";
+				context.clearRect(wall[i].x*20,wall[i].y*20,20,20);
+				context.fillRect(wall[i].x*20,wall[i].y*20,20,20);
+
+		}
+		for (var i = 0 ; i<wall3.length;i++){
+				drawWall(wall3[i].x,wall3[i].y);
+
+		}
+		
+		if(numberofclick>=1){
+		for(var i =0; i<snake.length;i++){
+		 context.fillStyle = "lightGreen"
+		 context.clearRect(oldsnake[i].x*20,oldsnake[i].y*20,20,20);
+		 context.fillRect(oldsnake[i].x*20,oldsnake[i].y*20,20,20);
+
+}}		snake = [{x : 55, y : 24},{x : 56, y : 24}];
+		message.style.display = "none";
+		accueil.style.display = "none";
+		canvas.style.display="block";
+		wall = wall3; 
+		numberofclick+=1;
+	
 	}
 
 
@@ -116,8 +153,9 @@ var wall = [[]];
 	var wall2 = [{x:30,y:10},{x:31,y:10},{x:32,y:10},{x:33,y:10},{x:34,y:10},{x:36,y:10},{x:37,y:10},{x:38,y:10},{x:39,y:7},{x:40,y:7},{x:41,y:7},{x:42,y:7},{x:43,y:7},{x:44,y:7},{x:45,y:7},{x:46,y:7},{x:47,y:7},{x:48,y:7},{x:49,y:7},{x:50,y:7},
 	{x:30,y:30},{x:31,y:30},{x:32,y:30},{x:33,y:30},{x:34,y:30},{x:35,y:30},{x:36,y:30},{x:38,y:30},{x:39,y:30},{x:40,y:30},{x:41,y:30},{x:42,y:37},{x:43,y:37},{x:44,y:37},{x:45,y:37},{x:46,y:37},{x:47,y:37},{x:48,y:37},{x:49,y:37},{x:50,y:37},
 		{x:10,y:10},{x:10,y:11},{x:10,y:12},{x:10,y:13},{x:10,y:14},{x:10,y:15},{x:10,y:16},{x:10,y:17},{x:10,y:18},{x:10,y:19},{x:70,y:10},{x:70,y:11},{x:70,y:12},{x:70,y:13},{x:70,y:14},{x:70,y:15},{x:70,y:16},{x:70,y:17},{x:70,y:18},{x:70,y:19},{x:70,y:19},{x:70,y:20},{x:70,y:21},{x:70,y:22},{x:70,y:23}];
-	//var wall  =
-
+	
+	
+	var wall3 = [{x:30,y:10}];
 	var world = new Array(80);
 	for(var i=0; i<world.length;i++){
 		world[i] = new Array(40);
@@ -129,7 +167,7 @@ var snk = "black";
 var fruit = "red";
 var wallc = "brown";
 
-console.log(bck);
+
 // backgroud color
 context.fillStyle = bck;
 context.fillRect(0,0 ,80*20,40*20);
@@ -157,11 +195,8 @@ function drawWall(x,y){
 
 //initialiser le monde
 for(i =0 ; i<snake.length;i++){
-
-
-		drawSq(snake[i].x*20,snake[i].y*20);
-
-		}
+drawSq(snake[i].x*20,snake[i].y*20);
+}
 
 
 
@@ -183,7 +218,7 @@ function changerdirection(event){
 		direction = "Right" ;
 	}
 
-	console.log(direction);
+
 
 
 
@@ -191,6 +226,19 @@ function changerdirection(event){
 
 var fruitposx = Math.floor((Math.random() * 80) + 1);
 var fruitposy = Math.floor((Math.random() * 40) + 1);
+
+
+
+
+for (var i = 0 ; i<wall.length;i++){
+	if(wall[i].x == fruitposx && wall[i].y==fruitposy){
+	
+		fruitposx+=1;
+		fruitposy+=1;
+	
+	}		
+	
+}
 drawFr(fruitposx*20,fruitposy*20);
 
 
@@ -263,8 +311,8 @@ for(i =0 ; i<snake.length;i++){
 
 //taille
 if(oldx==fruitposx && oldy==fruitposy){
-		delay-=10;
-		console.log(delay);
+	
+
 		fruitposx = Math.floor((Math.random() * 80) + 1);
 		fruitposy = Math.floor((Math.random() * 40) + 1);
 		drawFr(fruitposx*20,fruitposy*20);
@@ -289,7 +337,7 @@ snake.push({x: snake[snakelen].x,y: snake[snakelen].y+1});
 
 
 
-			console.log("you have lost");
+
 			freeze = true ;
 			if(freeze==true){
 				accueil.style.display = "block";
@@ -302,7 +350,6 @@ snake.push({x: snake[snakelen].x,y: snake[snakelen].y+1});
 		for (var i = 0 ; i<wall.length;i++){
 
 			if (snake[snakelen].x == wall[i].x && snake[snakelen].y == wall[i].y  ){
-			 console.log("you have hit a wall ");
 			 	freeze =true ;
 				if(freeze==true){
 				accueil.style.display = "block";
@@ -335,13 +382,24 @@ snake.push({x: snake[snakelen].x,y: snake[snakelen].y+1});
 
 
 		}
+		
+		if(levelselected ==3){
+			
+			
+			var posx = Math.floor((Math.random() * 80) + 1);
+			var posy = Math.floor((Math.random() * 40) + 1);
+			drawWall(posx,posy,20,20);
+			wall.push({x:posx,y:posy});
+		}
+		
+		
 
 
 
 }
 
 
-console.log(delay);
+
 setInterval (movesnake,delay);
 
 
